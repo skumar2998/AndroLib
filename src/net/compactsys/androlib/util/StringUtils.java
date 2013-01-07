@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package net.compactsys.androlib.utils;
+package net.compactsys.androlib.util;
 
 public class StringUtils {
 
     /**
      * Removes similar characters specified from the beginning of a string.
      * @param str Original string
-     * @param ch character to remove
+     * @param ch Character to remove
      * @return The string that remains after all occurrences of ch parameter are removed
      *         from the start of the current string.
      */
