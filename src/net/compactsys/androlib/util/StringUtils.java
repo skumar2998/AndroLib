@@ -21,13 +21,13 @@ public class StringUtils {
 
     /**
      * Removes similar characters specified from the beginning of a string.
+     *
      * @param str Original string
-     * @param ch Character to remove
+     * @param ch  Character to remove
      * @return The string that remains after all occurrences of ch parameter are removed
      *         from the start of the current string.
      */
-    public static String removeFirstChars(String str, char ch)
-    {
+    public static String removeFirstChars(String str, char ch) {
         int start = 0;
         while ((start < str.length()) && (str.charAt(start) == ch))
             start++;

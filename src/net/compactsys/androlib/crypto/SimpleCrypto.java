@@ -22,8 +22,12 @@ package net.compactsys.androlib.crypto;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import net.compactsys.androlib.util.ALog;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,21 +37,16 @@ import java.security.KeyStore;
 import java.security.KeyStore.SecretKeyEntry;
 import java.security.SecureRandom;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-
 /**
  * Symmetrically encrypts and decrypts strings using a seeded key stored in a
  * key store on internal storage. Be aware that anyone gaining access to this
  * app's storage may be able to access the key store. This is just supposed to
  * add furhter layers of work before being able to access encrypted data.
- *
  */
 public class SimpleCrypto {
 
     public static final String KEY_ALIAS = "coreentry";
-    public static final String PREFERENCES_KEY ="simplecryptokey";
+    public static final String PREFERENCES_KEY = "simplecryptokey";
     private static final String DATACORE = "datacore";
 
     /**
@@ -56,7 +55,7 @@ public class SimpleCrypto {
      */
     public static String encrypt(String cleartext, Context context) {
         try {
-            SecretKey key = getKey(context,PREFERENCES_KEY);
+            SecretKey key = getKey(context, PREFERENCES_KEY);
             byte[] result = encrypt(key, cleartext.getBytes());
             return toHex(result);
         } catch (GeneralSecurityException e) {
