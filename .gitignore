@@ -1,5 +1,9 @@
+#Android .gitignore:
+#-------------------
+
 # built application files
 *.apk
+*.apz
 *.ap_
 
 # files for the dex VM
@@ -15,6 +19,53 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 
-# Eclipse project files
-.classpath
+#Eclipse .gitignore:
+#-------------------
 .project
+.classpath
+.buildpath
+
+*.pydevproject
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+#IntelliJ IDEA
+#-------------
+.idea/**
+*.iml
+classes
+*.ipr
+*.iws
+classes
+gen-external-apklibs/**
+
+#Maven
+#-----
+target
+release.properties
+pom.xml.*
+
+# External tool builders
+#-----------------------
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+#-----------------------------------------------
+*.launch
+
+# CDT-specific
+.cproject
+
+builds/*.debug
+docs/proves/*.db
+build.xml
+ant.properties
