@@ -190,4 +190,19 @@ public class SimpleCrypto {
         return result;
     }
 
+    //toHex Alternative
+    /*
+    private final static String HEX = "0123456789ABCDEF";
+    public static String toHex(byte[] buf)
+    {
+        if (buf == null)
+            return "";
+        StringBuffer result = new StringBuffer(2 * buf.length);
+        for (int i = 0; i < buf.length; i++)
+        {
+            sb.append(HEX.charAt((b >> 4) & 0x0f)).append(HEX.charAt(b & 0x0f));
+        }
+        return result.toString();
+    }
+    */
 }
