@@ -39,16 +39,17 @@ public class DateUtils {
     }
 
     /**
-     * Gets date created from specified year, month and day.
+     * Gets date created from specified year, month (0-11) and day.
      *
      * @param year        Year number
-     * @param monthOfYear Month number (1-12)
+     * @param monthOfYear The month that was set (0-11) for compatibility
+     *                    with {@link java.util.Calendar}.
      * @param dayOfMonth  Day of Month
      * @return New date
      */
     public static Date getDate(int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear - 1, dayOfMonth);
+        calendar.set(year, monthOfYear, dayOfMonth);
 
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -64,7 +65,7 @@ public class DateUtils {
         int month = Integer.parseInt(cadena.substring(4, 4 + 2));
         int dayofmonth = Integer.parseInt(cadena.substring(6, 6 + 2));
 
-        return getDate(year, month, dayofmonth);
+        return getDate(year, month - 1, dayofmonth);
     }
 }
 
