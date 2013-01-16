@@ -29,13 +29,17 @@ import java.util.List;
 /**
  * Extension of a relative layout to provide a checkable behaviour
  *
- * @author marvinlabs
+ * Based on marvinlabs work @see <a href="http://blog.marvinlabs.com/2010/10/29/custom-listview-ability-check-items/">marvinlabs blog entry</a>
  */
 public class CheckableRelativeLayout extends RelativeLayout implements
         Checkable {
 
     private boolean isChecked;
     private List<Checkable> checkableViews;
+
+    private static final int[] CheckedStateSet = {
+            android.R.attr.state_checked
+    };
 
     public CheckableRelativeLayout(Context context, AttributeSet attrs,
                                    int defStyle) {
@@ -63,6 +67,7 @@ public class CheckableRelativeLayout extends RelativeLayout implements
         for (Checkable c : checkableViews) {
             c.setChecked(isChecked);
         }
+
     }
 
     /*
@@ -83,6 +88,12 @@ public class CheckableRelativeLayout extends RelativeLayout implements
         for (int i = 0; i < childCount; ++i) {
             findCheckableChildren(this.getChildAt(i));
         }
+    }
+
+    @Override
+    public boolean performClick() {
+        toggle();
+        return super.performClick();
     }
 
     /**
@@ -109,5 +120,14 @@ public class CheckableRelativeLayout extends RelativeLayout implements
                 findCheckableChildren(vg.getChildAt(i));
             }
         }
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        if (isChecked()) {
+            mergeDrawableStates(drawableState, CheckedStateSet);
+        }
+        return drawableState;
     }
 }
