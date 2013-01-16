@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2012 Ivan Masmitjà
  *
@@ -20,26 +19,17 @@ package net.compactsys.androlib.text;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-public class TextOrDigitFilter implements InputFilter {
-    static final char[] acceptedChars = new char[]{' ', ',', '.', '!', '?',
-            '-', '+', '\n', '(', ')', '@', '#', '%', '&', '*', '<', '>', '=', ':',
-            ';', '/', '"', '_', '~', '`', '|', '÷', '×', '{', '}', '¡', '¿'};
+/**
+ * This filter allow only letters or digits.
+ * @see  Character#isLetterOrDigit(char)
+ */
+public class LetterOrDigitFilter implements InputFilter {
 
-    public TextOrDigitFilter() {
+    public LetterOrDigitFilter() {
     }
 
     private boolean isAccepted(char ch) {
-        if (Character.isLetterOrDigit(ch)) {
-            return true;
-        } else {
-            int i = 0;
-            while (i < acceptedChars.length) {
-                if (acceptedChars[i] == ch)
-                    return true;
-                i++;
-            }
-            return false;
-        }
+        return Character.isLetterOrDigit(ch);
     }
 
     public CharSequence filter(CharSequence source, int start, int end,
@@ -51,6 +41,4 @@ public class TextOrDigitFilter implements InputFilter {
         }
         return null;
     }
-
-    ;
 }
