@@ -170,7 +170,7 @@ public class StringUtils {
      * StringUtils.repeat(null, "x", 2)  = null
      * StringUtils.repeat("", null, 0)   = ""
      * StringUtils.repeat("", "", 2)     = ""
-     * StringUtils.repeat("", "x", 3)    = "xxx"
+     * StringUtils.repeat("", "x", 3)    = "xx"
      * StringUtils.repeat("?", ", ", 3)  = "?, ?, ?"
      * </pre>
      *
@@ -196,9 +196,9 @@ public class StringUtils {
      * </p>
      * <p/>
      * <pre>
-     * StringUtils.repeat(0, 'e')  = ""
-     * StringUtils.repeat(3, 'e')  = "eee"
-     * StringUtils.repeat(-2, 'e') = ""
+     * StringUtils.repeat('e', 0)  = ""
+     * StringUtils.repeat('e', 3)  = "eee"
+     * StringUtils.repeat('e',-2) = ""
      * </pre>
      * <p/>
      * <p>
@@ -215,6 +215,9 @@ public class StringUtils {
      * @see #repeat(String, int)
      */
     public static String repeat(char ch, int repeat) {
+        if (repeat <= 0)
+            return "";
+
         char[] buf = new char[repeat];
         for (int i = repeat - 1; i >= 0; i--) {
             buf[i] = ch;
