@@ -654,12 +654,12 @@ public class StringUtils {
     }
 
     /**
-     * Removes similar characters specified from the beginning of a string.
+     * Removes similar characters from the beginning of the string.
      *
      * @param str Original string
      * @param ch  Character to remove
-     * @return The string that remains after all occurrences of ch parameter are removed
-     *         from the start of the current string.
+     * @return The string that remains after removing all occurrences of ch parameter
+     *         from the start of the initial string.
      */
     public static String removeFirstChars(String str, char ch) {
         int start = 0;

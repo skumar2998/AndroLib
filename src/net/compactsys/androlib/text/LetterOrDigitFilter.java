@@ -20,7 +20,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 
 /**
- * This filter allow only letters or digits.
+ * This filter allows only letters or digits.
  * @see  Character#isLetterOrDigit(char)
  */
 public class LetterOrDigitFilter implements InputFilter {
