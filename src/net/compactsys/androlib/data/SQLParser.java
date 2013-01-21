@@ -55,7 +55,7 @@ public class SQLParser {
                     }
                     // Append line if line is not empty or a single line comment
                 } else if (!line.startsWith("--") && !line.equals("")) {
-                    sql.append(line);
+                    sql.append(" " + line);
                 } // Check for matching end comment
             } else if (multiLineComment.equals("/*")) {
                 if (line.endsWith("*/")) {
@@ -69,6 +69,6 @@ public class SQLParser {
             }
         }
         sqlFile.close();
-        return sql.toString().split(";");
+        return sql.toString().trim().split("\\s*;\\s*");
     }
 }
