@@ -47,7 +47,7 @@ import java.security.SecureRandom;
 public class SimpleCrypto {
 
     public static final String KEY_ALIAS = "coreentry";
-    public static final String PREFERENCES_KEY = "simplecryptokey";
+    public static final String PREFERENCES_KEY = "net.compactsys.androlib.simplecryptokey";
     private static final String DATACORE = "datacore";
 
     /**
