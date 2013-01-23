@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.KeyStore.SecretKeyEntry;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
@@ -46,7 +47,7 @@ import java.security.SecureRandom;
 public class SimpleCrypto {
 
     public static final String KEY_ALIAS = "coreentry";
-    public static final String PREFERENCES_KEY = "simplecryptokey";
+    public static final String PREFERENCES_KEY = "net.compactsys.androlib.simplecryptokey";
     private static final String DATACORE = "datacore";
 
     /**
@@ -127,11 +128,7 @@ public class SimpleCrypto {
             return key;
         } else {
             // create new key
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed(toByte(seed));
-            keyGen.init(128, sr); // 192 and 256 bits may not be available
-            SecretKey key = keyGen.generateKey();
+            SecretKey key = generateKey(toByte(seed));
 
             // store key
             KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(key);
@@ -150,6 +147,21 @@ public class SimpleCrypto {
 
             return key;
         }
+    }
+
+    private static SecretKey generateKey(byte[] seed) throws NoSuchAlgorithmException {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+        sr.setSeed(seed);
+        keyGen.init(128, sr); // 192 and 256 bits may not be available
+        return keyGen.generateKey();
+    }
+
+    private static byte[] getRawKey(byte[] seed) throws NoSuchAlgorithmException
+    {
+        SecretKey skey = generateKey(seed);
+        byte[] raw = skey.getEncoded();
+        return raw;
     }
 
     private static byte[] encrypt(SecretKey key, byte[] clear) throws GeneralSecurityException {

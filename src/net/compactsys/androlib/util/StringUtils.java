@@ -170,7 +170,7 @@ public class StringUtils {
      * StringUtils.repeat(null, "x", 2)  = null
      * StringUtils.repeat("", null, 0)   = ""
      * StringUtils.repeat("", "", 2)     = ""
-     * StringUtils.repeat("", "x", 3)    = "xxx"
+     * StringUtils.repeat("", "x", 3)    = "xx"
      * StringUtils.repeat("?", ", ", 3)  = "?, ?, ?"
      * </pre>
      *
@@ -196,9 +196,9 @@ public class StringUtils {
      * </p>
      * <p/>
      * <pre>
-     * StringUtils.repeat(0, 'e')  = ""
-     * StringUtils.repeat(3, 'e')  = "eee"
-     * StringUtils.repeat(-2, 'e') = ""
+     * StringUtils.repeat('e', 0)  = ""
+     * StringUtils.repeat('e', 3)  = "eee"
+     * StringUtils.repeat('e',-2) = ""
      * </pre>
      * <p/>
      * <p>
@@ -215,6 +215,9 @@ public class StringUtils {
      * @see #repeat(String, int)
      */
     public static String repeat(char ch, int repeat) {
+        if (repeat <= 0)
+            return "";
+
         char[] buf = new char[repeat];
         for (int i = repeat - 1; i >= 0; i--) {
             buf[i] = ch;
@@ -651,12 +654,12 @@ public class StringUtils {
     }
 
     /**
-     * Removes similar characters specified from the beginning of a string.
+     * Removes similar characters from the beginning of the string.
      *
      * @param str Original string
      * @param ch  Character to remove
-     * @return The string that remains after all occurrences of ch parameter are removed
-     *         from the start of the current string.
+     * @return The string that remains after removing all occurrences of ch parameter
+     *         from the start of the initial string.
      */
     public static String removeFirstChars(String str, char ch) {
         int start = 0;

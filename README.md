@@ -1,12 +1,50 @@
 AndroLib
 ========
 
-General purpose android library
+General purpose android library.
 
-What's new
-----------
+AndroLib Classes
+----------------
 
-### V1.0.0.1 ###
-+ Maven configuration uses  mosabua/maven-android-sdk-deployer
-+ **Changed getDate() parameters. The month that was set (0-11) for compatibility withjava.util.Calendar.**
+### SQLParser ###
+
+```java
+import net.compactsys.androlib.data.SQLParser;
+
+public class DbHelper extends SQLiteOpenHelper {
+	//...
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		
+		// Load SQL Script from raw resources
+		Resources res = mContext.getResources();
+		InputStream ins = res.openRawResource(R.raw.database_sql);		
+		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
+		
+		try {
+			// Extract all statements && execute
+			String[] sqlstrings = SQLParser.parseSqlFile(br);
+			for (String sql : sqlstrings) {
+				db.execSQL(sql);
+			}
+		} catch (Exception ex) {
+			//...
+		}
+	}
+}
+```
+
+### SimpleCrypto ###
+
+
+```java
+import net.compactsys.androlib.crypto.SimpleCrypto;
+
+// Encrypt String
+String encrypted = SimpleCrypto.encrypt(original, getContext());
+
+// Decrypt String
+String decrypted = SimpleCrypto.decrypt(encrypted, getContext());
+
+```
 
