@@ -32,7 +32,7 @@ public class Filesystem {
      * @return Bytes transferred
      * @throws IOException
      */
-    public static int Copy(String sourceFileName, String destFileName) throws IOException {
+    public static int copy(String sourceFileName, String destFileName) throws IOException {
         InputStream myInput = new FileInputStream(sourceFileName);
         OutputStream myOutput = new FileOutputStream(destFileName);
 
@@ -52,7 +52,7 @@ public class Filesystem {
      * @return Bytes transferred
      * @throws IOException
      */
-    public static int Copy(InputStream istream, OutputStream ostream)
+    public static int copy(InputStream istream, OutputStream ostream)
             throws IOException {
 
         byte[] buffer = new byte[COPY_BUFFER_SIZE];
