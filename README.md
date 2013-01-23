@@ -12,9 +12,7 @@ AndroLib Classes
 import net.compactsys.androlib.data.SQLParser;
 
 public class DbHelper extends SQLiteOpenHelper {
-
 	//...
-
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
@@ -46,6 +44,6 @@ import net.compactsys.androlib.crypto.SimpleCrypto;
 String encrypted = SimpleCrypto.encrypt(original, getContext());
 
 // Decrypt String
-String decrypted = SimpleCrypto.decrypt(encrypted, MyApplication.getInstance().getApplicationContext());
+String decrypted = SimpleCrypto.decrypt(encrypted, getContext());
 
 ```
