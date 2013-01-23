@@ -36,7 +36,7 @@ public class Filesystem {
         InputStream myInput = new FileInputStream(sourceFileName);
         OutputStream myOutput = new FileOutputStream(destFileName);
 
-        int totalBytes = Copy(myInput, myOutput);
+        int totalBytes = copy(myInput, myOutput);
 
         myOutput.close();
         myInput.close();
