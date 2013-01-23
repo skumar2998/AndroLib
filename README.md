@@ -6,7 +6,7 @@ General purpose android library.
 AndroLib Classes
 ----------------
 
-#### /data ####
+#### androlib.data ####
 ### SQLParser ###
 
 ```java
@@ -35,7 +35,7 @@ public class DbHelper extends SQLiteOpenHelper {
 }
 ```
 
-### /crypto ###
+### androlib.crypto ###
 ### SimpleCrypto ###
 
 
@@ -50,7 +50,7 @@ String decrypted = SimpleCrypto.decrypt(encrypted, getContext());
 
 ```
 
-### /io ###
+### androlib.io ###
 #### Filesystem ####
 
 ```java
@@ -69,7 +69,7 @@ boolean isSDCardWritable(){}
 File[] getFiles(File directory, final String fileRegExpFilter) {}
 ```
 
-### /util ###
+### androlib.util ###
 #### StringUtils ####
 
 ```java	
