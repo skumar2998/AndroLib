@@ -633,8 +633,8 @@ public class StringUtils {
      * StringUtils.removeEndIgnoreCase("www.domain.com", ".com")   = "www.domain"
      * StringUtils.removeEndIgnoreCase("www.domain.com", "domain") = "www.domain.com"
      * StringUtils.removeEndIgnoreCase("abc", "")    = "abc"
-     * StringUtils.removeEndIgnoreCase("www.domain.com", ".COM") = "www.domain")
-     * StringUtils.removeEndIgnoreCase("www.domain.COM", ".com") = "www.domain")
+     * StringUtils.removeEndIgnoreCase("www.domain.com", ".COM") = "www.domain"
+     * StringUtils.removeEndIgnoreCase("www.domain.COM", ".com") = "www.domain"
      * </pre>
      *
      * @param str    the source String to search, may be null
@@ -655,13 +655,17 @@ public class StringUtils {
 
     /**
      * Removes similar characters from the beginning of the string.
-     *
+     *	 
+     * <pre>
+	 * StringUtils.removeFirstN("0000012345", '0') = "1235"
+     * <pre>	 
+     *	 
      * @param str Original string
      * @param ch  Character to remove
      * @return The string that remains after removing all occurrences of ch parameter
      *         from the start of the initial string.
      */
-    public static String removeFirstChars(String str, char ch) {
+    public static String removeFirstN(String str, char ch) {
         int start = 0;
         while ((start < str.length()) && (str.charAt(start) == ch))
             start++;
