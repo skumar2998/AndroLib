@@ -25,7 +25,7 @@ package net.compactsys.androlib.util;
  * Based on org.apache.commons.lang.StringUtils
  * see <a href="http://commons.apache.org/lang/api-2.5/org/apache/commons/lang/StringUtils.html">StringUtils Class</a>
  */
-public class StringUtils {
+public final class StringUtils {
 
     /**
      * The empty String <code>""</code>.
@@ -33,14 +33,15 @@ public class StringUtils {
      * @since 2.0
      */
     public static final String EMPTY = "";
-
-
     /**
      * <p>
      * The maximum size to which the padding constant(s) can expand.
      * </p>
      */
     private static final int PAD_LIMIT = 8192;
+
+    private StringUtils() {
+    }
 
     // Empty checks
     // -----------------------------------------------------------------------
@@ -160,7 +161,6 @@ public class StringUtils {
         }
     }
 
-
     /**
      * <p>Repeat a String <code>repeat</code> times to form a
      * new String, with a String separator injected each time. </p>
@@ -215,8 +215,9 @@ public class StringUtils {
      * @see #repeat(String, int)
      */
     public static String repeat(char ch, int repeat) {
-        if (repeat <= 0)
+        if (repeat <= 0) {
             return "";
+        }
 
         char[] buf = new char[repeat];
         for (int i = repeat - 1; i >= 0; i--) {
@@ -655,11 +656,11 @@ public class StringUtils {
 
     /**
      * Removes similar characters from the beginning of the string.
-     *	 
+     * <p/>
      * <pre>
-	 * StringUtils.removeFirstN("0000012345", '0') = "1235"
-     * <pre>	 
-     *	 
+     * StringUtils.removeFirstN("0000012345", '0') = "1235"
+     * </pre>
+     *
      * @param str Original string
      * @param ch  Character to remove
      * @return The string that remains after removing all occurrences of ch parameter
@@ -667,13 +668,15 @@ public class StringUtils {
      */
     public static String removeFirstN(String str, char ch) {
         int start = 0;
-        while ((start < str.length()) && (str.charAt(start) == ch))
+        while ((start < str.length()) && (str.charAt(start) == ch)) {
             start++;
+        }
 
-        if (start < str.length())
+        if (start < str.length()) {
             return str.substring(start);
-        else
+        } else {
             return "";
+        }
     }
 
     // startsWith

@@ -16,13 +16,13 @@
 
 package net.compactsys.androlib.widget;
 
-import java.util.List;
-
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import java.util.List;
+
 /**
- * Array adapter used to keep selected position in ListView
+ * Array adapter used to keep selected position in ListView.
  */
 public class SelectedArrayAdapter<E> extends ArrayAdapter<E> {
 
@@ -33,13 +33,13 @@ public class SelectedArrayAdapter<E> extends ArrayAdapter<E> {
         super(context, textViewResourceId, objects);
     }
 
+    public int getSelectedPosition() {
+        return selectedPos;
+    }
+
     public void setSelectedPosition(int pos) {
         selectedPos = pos;
         // inform the view of this change
         notifyDataSetChanged();
-    }
-
-    public int getSelectedPosition() {
-        return selectedPos;
     }
 }

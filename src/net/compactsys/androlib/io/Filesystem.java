@@ -21,8 +21,11 @@ import android.os.Environment;
 
 import java.io.*;
 
-public class Filesystem {
-    private final static int COPY_BUFFER_SIZE = 1024;
+public final class Filesystem {
+    private static final int COPY_BUFFER_SIZE = 1024;
+
+    private Filesystem() {
+    }
 
     /**
      * Copies an existing file to a new file.
@@ -45,7 +48,7 @@ public class Filesystem {
     }
 
     /**
-     * Transfer bytes from the istream to the ostream
+     * Transfer bytes from the istream to the ostream.
      *
      * @param istream Input stream
      * @param ostream Output stream
@@ -94,9 +97,9 @@ public class Filesystem {
     }
 
     /**
-     * Check if SDCARD is available and writable
+     * Check if SDCARD is available and writable.
      *
-     * @return True if SDCARD is available and writable
+     * @return True if SDCARD is available and writable.
      */
     public static boolean isSDCardWritable() {
         // Check SD Storage
@@ -129,9 +132,10 @@ public class Filesystem {
             }
         };
 
-        if ((directory != null) && (directory.exists()))
+        if ((directory != null) && (directory.exists())) {
             return directory.listFiles(filter);
-        else
+        } else {
             return null;
+        }
     }
 }

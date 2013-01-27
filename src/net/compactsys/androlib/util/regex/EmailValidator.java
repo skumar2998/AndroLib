@@ -23,20 +23,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EmailValidator {
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
     public EmailValidator() {
         pattern = Pattern.compile(EMAIL_PATTERN);
-    }
-
-    public boolean validate(final String text) {
-
-        matcher = pattern.matcher(text);
-        return matcher.matches();
-
     }
 
     public static boolean validateSingle(final String text) {
@@ -51,9 +44,17 @@ public class EmailValidator {
         Pattern p = Pattern.compile("\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b",
                 Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(s);
-        while (m.find())
+        while (m.find()) {
             list.add(m.group());
+        }
 
         return list;
+    }
+
+    public boolean validate(final String text) {
+
+        matcher = pattern.matcher(text);
+        return matcher.matches();
+
     }
 }

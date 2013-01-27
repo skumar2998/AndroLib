@@ -1,25 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-  
-  <groupId>net.compactsys.androlib</groupId>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>net.compactsys.androlib</groupId>
     <artifactId>AndroLib</artifactId>
     <version>1.0.0.2-SNAPSHOT</version>
     <!-- <packaging>apklib</packaging> -->
- 
-	<name>AndroLib</name>
+
+    <name>AndroLib</name>
     <description>Generic android library.</description>
     <url>https://github.com/imasm/AndroLib</url>
-	<inceptionYear>2012</inceptionYear>
-	
-	
+    <inceptionYear>2012</inceptionYear>
+
+
     <licenses>
         <license>
             <name>Apache License Version 2.0</name>
@@ -33,13 +33,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <name>Ivan Masmitja Dagas</name>
             <url>https://github.com/imasm</url>
             <id>imasmitja</id>
-			<roles>
-				<role>developer</role>
-			</roles>
+            <roles>
+                <role>developer</role>
+            </roles>
         </developer>
     </developers>
 
-   <properties>
+    <properties>
         <!-- build settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -48,114 +48,125 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <android.platform>16</android.platform>
         <android-maven.version>3.5.0</android-maven.version>
     </properties>
-  
-  
-  
-  <dependencies>
-    <!--
-To get this library to compile (with appropriate warnings) in your IDE, you need to point your IDE project SDK
-to your Android SDK and choose an Android version. 
 
-To get this library to compile in Maven you need to have an Android SDK installed and pointed to
-by an ANDROID_HOME environment variable. This is because we use a bootclasspath during compilation
-to ensure that only APIs from a specific Android version have been used.
-NB The AndroidAPI dependency is included below to allow test execution and javadoc generation.
--->
-	
-	<!-- using  mosabua/maven-android-sdk-deployer (see in github) -->
-	<dependency>
-		<groupId>android</groupId>
-		<artifactId>android</artifactId>
-		<version>${android.version}</version>
-		<scope>provided</scope>
-	</dependency>
-  
-  </dependencies>
-  
-  
-  
-	<build>
-		<finalName>AndroLib</finalName>
-		<sourceDirectory>src</sourceDirectory>
-		
-    <pluginManagement>
-     
-	 <plugins>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.1</version>
-        </plugin>
-		
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
-        </plugin>
-		
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2.1</version>
-        </plugin>
-		
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.7</version>
-        </plugin>
-		
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>2.1.2</version>
-        </plugin>
-		
-      </plugins>
-    </pluginManagement>
-	
-	
-    <plugins>
-      
-	  <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <showWarnings>true</showWarnings>
-          <compilerArguments>
-            <bootclasspath>
-            ${env.ANDROID_HOME}/platforms/android-${android.platform}/android.jar</bootclasspath>
-          </compilerArguments>
-        </configuration>
-      </plugin>
-	  
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-		<!--
-        <configuration>
-          <excludePackageNames></excludePackageNames>
-        </configuration>
-		-->
-      </plugin>
-	  
-	  
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  
-  </build>
-  
+
+    <dependencies>
+        <!--
+    To get this library to compile (with appropriate warnings) in your IDE, you need to point your IDE project SDK
+    to your Android SDK and choose an Android version.
+
+    To get this library to compile in Maven you need to have an Android SDK installed and pointed to
+    by an ANDROID_HOME environment variable. This is because we use a bootclasspath during compilation
+    to ensure that only APIs from a specific Android version have been used.
+    NB The AndroidAPI dependency is included below to allow test execution and javadoc generation.
+    -->
+
+        <!-- using  mosabua/maven-android-sdk-deployer (see in github) -->
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <version>${android.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <finalName>AndroLib</finalName>
+        <sourceDirectory>src</sourceDirectory>
+
+        <pluginManagement>
+
+            <plugins>
+
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                    <compilerArguments>
+                        <bootclasspath>
+                            ${env.ANDROID_HOME}/platforms/android-${android.platform}/android.jar
+                        </bootclasspath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <failsOnError>true</failsOnError>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!--
+                <configuration>
+                  <excludePackageNames></excludePackageNames>
+                </configuration>
+                -->
+            </plugin>
+
+
+
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
 </project>

@@ -23,12 +23,16 @@ import android.net.Uri;
 import java.io.File;
 import java.util.ArrayList;
 
-public class MailIntents {
+public final class MailIntents {
+
+    private MailIntents() {
+    }
 
     /**
      * Launch an Intent to send an email.
+     *
      * @param context Context that launches Intent.
-     * @param mailTo Specifies the receiver / receivers of the email.
+     * @param mailTo  Specifies the receiver / receivers of the email.
      */
     public static void sendEmail(Context context, String[] mailTo) {
         sendEmail(context, mailTo, "", "", null);
@@ -36,10 +40,11 @@ public class MailIntents {
 
     /**
      * Launch an Intent to send an email.
-     * @param context Context that launches Intent.
-     * @param mailTo Specifies the receiver / receivers of the email.
-     * @param subject Specifies the subject of the email.
-     * @param body Defines the message to be sent.
+     *
+     * @param context     Context that launches Intent.
+     * @param mailTo      Specifies the receiver / receivers of the email.
+     * @param subject     Specifies the subject of the email.
+     * @param body        Defines the message to be sent.
      * @param attachments Files to attach to the email message.
      */
     public static void sendEmail(Context context, String[] mailTo,
@@ -56,24 +61,29 @@ public class MailIntents {
         String action = android.content.Intent.ACTION_SEND;
         String mimeType = "text/plain";
 
-        if (uris.size() > 1)
+        if (uris.size() > 1) {
             action = android.content.Intent.ACTION_SEND_MULTIPLE;
+        }
 
-        if (uris.size() > 0)
+        if (uris.size() > 0) {
             mimeType = "multipart/mixed";
+        }
 
         Intent emailIntent = new Intent(action);
         emailIntent.setType(mimeType);
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, mailTo);
 
-        if ((subject != null) && (subject.trim().length() > 0))
+        if ((subject != null) && (subject.trim().length() > 0)) {
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        }
 
-        if ((body != null) && (body.trim().length() > 0))
+        if ((body != null) && (body.trim().length() > 0)) {
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+        }
 
-        if (uris.size() > 0)
+        if (uris.size() > 0) {
             emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+        }
 
         context.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }

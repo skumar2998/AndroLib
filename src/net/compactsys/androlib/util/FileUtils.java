@@ -19,7 +19,7 @@ package net.compactsys.androlib.util;
 
 import java.io.File;
 
-public class FileUtils {
+public final class FileUtils {
     private FileUtils() {
     }
 
@@ -32,10 +32,10 @@ public class FileUtils {
      */
     public static String getFileExtension(File f) {
         int dot = f.getName().lastIndexOf('.');
-        if (dot > 0)
+        if (dot > 0) {
             return f.getName().substring(dot);
-        else
-            return "";
+        }
+        return "";
     }
 
     public static File changeFileExtension(File f, String newfileExtension) {

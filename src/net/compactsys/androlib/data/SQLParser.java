@@ -20,13 +20,13 @@ package net.compactsys.androlib.data;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class SQLParser {
+public final class SQLParser {
 
     private SQLParser() {
     }
 
     /**
-     * Parses a SQL file and gets all SQL statements
+     * Parses a SQL file and gets all SQL statements.
      *
      * @param sqlFile SQL File
      * @return Array of al SQL statements

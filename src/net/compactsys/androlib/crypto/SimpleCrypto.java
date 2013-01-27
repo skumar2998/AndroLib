@@ -44,11 +44,14 @@ import java.security.SecureRandom;
  * app's storage may be able to access the key store. This is just supposed to
  * add furhter layers of work before being able to access encrypted data.
  */
-public class SimpleCrypto {
+public final class SimpleCrypto {
 
     public static final String KEY_ALIAS = "coreentry";
     public static final String PREFERENCES_KEY = "net.compactsys.androlib.simplecryptokey";
     private static final String DATACORE = "datacore";
+
+    private SimpleCrypto() {
+    }
 
     /**
      * Returns the given string in encrypted form, or {@code null} if encryption

@@ -20,7 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-public class PhoneIntents {
+public final class PhoneIntents {
+
+    private PhoneIntents() {
+    }
 
     public static void phoneCall(Context context, String telf) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
