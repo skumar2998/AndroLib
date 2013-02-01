@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package es.espuna.andlib.util;
+package net.compactsys.androlib.util;
 
 import java.util.Arrays;
 
