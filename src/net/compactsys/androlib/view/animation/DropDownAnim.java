@@ -43,7 +43,9 @@ public class DropDownAnim extends Animation {
             newHeight = (int) (targetHeight * (1 - interpolatedTime));
         }
 
-        if (newHeight == 0) newHeight = 1;
+        if (newHeight == 0) {
+            newHeight = 1;
+        }
 
         view.getLayoutParams().height = newHeight;
         view.requestLayout();

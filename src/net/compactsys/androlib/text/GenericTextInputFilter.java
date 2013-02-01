@@ -23,7 +23,7 @@ import android.text.Spanned;
  * Accept most common characters.
  */
 public class GenericTextInputFilter implements InputFilter {
-    static final char[] acceptedChars = new char[]{' ', ',', '.', '!', '?',
+    static final char[] ACCEPTED_CHARS = new char[]{' ', ',', '.', '!', '?',
             '-', '+', '\n', '(', ')', '@', '#', '%', '&', '*', '<', '>', '=', ':',
             ';', '/', '"', '_', '~', '`', '|', '÷', '×', '{', '}', '¡', '¿'};
 
@@ -35,9 +35,10 @@ public class GenericTextInputFilter implements InputFilter {
             return true;
         } else {
             int i = 0;
-            while (i < acceptedChars.length) {
-                if (acceptedChars[i] == ch)
+            while (i < ACCEPTED_CHARS.length) {
+                if (ACCEPTED_CHARS[i] == ch) {
                     return true;
+                }
                 i++;
             }
             return false;

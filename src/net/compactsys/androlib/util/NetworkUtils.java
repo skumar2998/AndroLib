@@ -21,16 +21,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * To access internet we need INTERNET Permission
- * To detect network status we need ACCESS_NETWORK_STATE Permission
+ * To access internet we need INTERNET Permission.
+ * To detect network status we need ACCESS_NETWORK_STATE Permission.
  */
-public class NetworkUtils {
+public final class NetworkUtils {
 
     private NetworkUtils() {
     }
 
     /**
-     * Check if internet connection is available
+     * Check if internet connection is available.
      * @param context
      * @return True if it's connected
      */

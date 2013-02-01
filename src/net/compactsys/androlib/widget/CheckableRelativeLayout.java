@@ -27,19 +27,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Extension of a relative layout to provide a checkable behaviour
- *
- * Based on marvinlabs work @see <a href="http://blog.marvinlabs.com/2010/10/29/custom-listview-ability-check-items/">marvinlabs blog entry</a>
+ * Extension of a relative layout to provide a checkable behaviour.
+ * <p/>
+ * Based on marvinlabs work
+ * @see <a href="http://blog.marvinlabs.com/2010/10/29/custom-listview-ability-check-items/">marvinlabs blog entry</a>
  */
 public class CheckableRelativeLayout extends RelativeLayout implements
         Checkable {
 
-    private boolean isChecked;
-    private List<Checkable> checkableViews;
-
-    private static final int[] CheckedStateSet = {
+    public static final int CAPACITY = 5;
+    private static final int[] CHECKED_STATE_SET = {
             android.R.attr.state_checked
     };
+
+    private boolean isChecked;
+    private List<Checkable> checkableViews;
 
     public CheckableRelativeLayout(Context context, AttributeSet attrs,
                                    int defStyle) {
@@ -97,16 +99,16 @@ public class CheckableRelativeLayout extends RelativeLayout implements
     }
 
     /**
-     * Initialize widget
+     * Initialize widget.
      */
     private void initialise() {
         this.isChecked = false;
-        this.checkableViews = new ArrayList<Checkable>(5);
+        this.checkableViews = new ArrayList<Checkable>(CAPACITY);
     }
 
     /**
      * Add to our checkable list all the children of the view that implement the
-     * interface Checkable
+     * interface Checkable.
      */
     private void findCheckableChildren(View v) {
         if (v instanceof Checkable) {
@@ -126,7 +128,7 @@ public class CheckableRelativeLayout extends RelativeLayout implements
     protected int[] onCreateDrawableState(int extraSpace) {
         final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
         if (isChecked()) {
-            mergeDrawableStates(drawableState, CheckedStateSet);
+            mergeDrawableStates(drawableState, CHECKED_STATE_SET);
         }
         return drawableState;
     }
