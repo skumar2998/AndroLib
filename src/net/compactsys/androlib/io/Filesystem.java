@@ -45,6 +45,26 @@ public class Filesystem {
     }
 
     /**
+     * Copies an existing file to a new file.
+     *
+     * @param sourceFile The source File.
+     * @param destFile   The destination file. This cannot be a directory or an existing file.
+     * @return Bytes transferred
+     * @throws IOException
+     */
+    public static int copy(File sourceFile, File destFile) throws IOException {
+        InputStream myInput = new FileInputStream(sourceFile);
+        OutputStream myOutput = new FileOutputStream(destFile);
+
+        int totalBytes = copy(myInput, myOutput);
+
+        myOutput.close();
+        myInput.close();
+
+        return totalBytes;
+    }
+
+    /**
      * Transfer bytes from the istream to the ostream
      *
      * @param istream Input stream
