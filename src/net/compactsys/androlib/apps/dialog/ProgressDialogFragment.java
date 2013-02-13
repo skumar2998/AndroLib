@@ -27,16 +27,61 @@ public class ProgressDialogFragment extends DialogFragment {
     public final static String ARG_TITLE = "title";
     public final static String ARG_MESSAGE = "message";
     public final static String ARG_CANCELABE = "cancelable";
+    public final static String ARG_STYLE = "style";
+
+    private final static String ARG_PROGRESS = "progress";
 
     private int mMax;
-    private int mIncrementBy;
     private int mProgress;
+    private String mMessage;
 
+    //region HackishSavedState
+    private static class HackishSavedState {
+        private static Bundle mBundle = new Bundle();
+
+        public static Bundle getBundle(String key) {
+            return mBundle.getBundle(key);
+        }
+
+        public static void putBundle(String key, Bundle bundle) {
+            mBundle.putBundle(key, bundle);
+        }
+    }
+
+    private String getInternalStateKey() {
+        return "internalState:" + getTag();
+    }
+    //endregion
+
+
+    /**
+     * Create a spinner progress dialog.
+     *
+     * @param title      Title displayed in the {@link Dialog}.
+     * @param message    Set the message to display.
+     * @param cancelable Sets whether the dialog is cancelable or not
+     * @return ProgressDialogFragment
+     */
     public static ProgressDialogFragment newInstance(String title, String message, boolean cancelable) {
+        return newInstance(title, message, ProgressDialog.STYLE_SPINNER, cancelable);
+    }
+
+    /**
+     * Create a spinner progress dialog.
+     *
+     * @param title      Title displayed in the {@link Dialog}.
+     * @param message    Set the message to display.
+     * @param cancelable Sets whether the dialog is cancelable or not
+     * @return ProgressDialogFragment
+     * @pram style STYLE_SPINNER or STYLE_HORIZONTAL
+     */
+    public static ProgressDialogFragment newInstance(String title, String message, int style, boolean cancelable) {
+
         Bundle args = new Bundle();
         args.putString(ARG_TITLE, title);
         args.putString(ARG_MESSAGE, message);
         args.putBoolean(ARG_CANCELABE, cancelable);
+        args.putInt(ARG_STYLE, style);
 
         ProgressDialogFragment pdf = new ProgressDialogFragment();
         pdf.setArguments(args);
@@ -45,44 +90,63 @@ public class ProgressDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        String title = getArguments().getString(ARG_TITLE);
+        boolean cancelable = getArguments().getBoolean(ARG_CANCELABE);
+        int style = getArguments().getInt(ARG_STYLE);
+        mMessage = getArguments().getString(ARG_MESSAGE);
+        mProgress = getArguments().getInt(ARG_PROGRESS);
+
+
+        // savedInstanceState not work!!!
+        /*
+        * if (savedInstanceState != null) {
+        *     Log.d(TAG, "restore savedInstanceState");
+        *     mMessage = savedInstanceState.getString(ARG_MESSAGE);
+        *     mProgress = savedInstanceState.getInt(ARG_PROGRESS);
+        * }
+        */
+
+        // Restore instance from HackishSavedState
+        Bundle savedBundle = HackishSavedState.getBundle(getInternalStateKey());
+        if (savedBundle != null) {
+            mMessage = savedBundle.getString(ARG_MESSAGE);
+            mProgress = savedBundle.getInt(ARG_PROGRESS);
+        }
+
         ProgressDialog pd = new ProgressDialog(getActivity());
-
-        final String title = getArguments().getString(ARG_TITLE);
-        final String message = getArguments().getString(ARG_MESSAGE);
-        final boolean cancelable = getArguments().getBoolean(ARG_CANCELABE);
-
-        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setProgressStyle(style);
+        pd.setCancelable(cancelable);
+        pd.setCanceledOnTouchOutside(false);
 
         if (null != title) {
             pd.setTitle(title);
         }
 
-        if (null != message) {
-            pd.setMessage(message);
+        if (null != mMessage) {
+            pd.setMessage(mMessage);
         }
-
-        pd.setCancelable(cancelable);
-        pd.setCanceledOnTouchOutside(false);
 
         if (mMax > 0) {
             pd.setMax(mMax);
         }
 
         if (mProgress > 0) {
-            pd.setProgress(mProgress);
+            setProgress(mProgress);
         }
-
-        if (mIncrementBy > 0) {
-            pd.incrementProgressBy(mIncrementBy);
-        }
-
-        setCancelable(cancelable);
 
         return pd;
     }
 
     public void updateMessage(String message) {
+        mMessage = message;
         if (getDialog() == null) {
             return;
         }
@@ -99,20 +163,42 @@ public class ProgressDialogFragment extends DialogFragment {
     }
 
     public void setProgress(int progress) {
+        mProgress = progress;
         ProgressDialog pd = (ProgressDialog) getDialog();
         if (pd != null) {
             pd.setProgress(progress);
-        } else {
-            mProgress = progress;
         }
     }
 
     public void incrementProgressBy(int increment) {
+        mProgress += increment;
         ProgressDialog pd = (ProgressDialog) getDialog();
         if (pd != null) {
             pd.incrementProgressBy(increment);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String key = getInternalStateKey();
+
+        ProgressDialog dlg = (ProgressDialog) getDialog();
+        if (dlg != null) {
+            // Don't work -> savedInstanceState value is NULL in OnCreate()
+            /*
+            * internalState.putString(ARG_MESSAGE, mMessage);
+            * internalState.putInt(ARG_PROGRESS, dlg.getProgress());
+            * Log.d(TAG, "->"  + internalState.toString());
+            */
+
+            // Save in HackishSavedState
+            Bundle internalState = new Bundle();
+            internalState.putString(ARG_MESSAGE, mMessage);
+            internalState.putInt(ARG_PROGRESS, dlg.getProgress());
+            HackishSavedState.putBundle(key, internalState);
         } else {
-            mIncrementBy += increment;
+            HackishSavedState.putBundle(getInternalStateKey(), null);
         }
     }
 
