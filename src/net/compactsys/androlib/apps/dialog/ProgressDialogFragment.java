@@ -21,8 +21,7 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
-
-public class ProgressDialogFragment extends DialogFragment {
+public class ProgressDialogFragment extends InternalDialogFragment {
 
     public final static String ARG_TITLE = "title";
     public final static String ARG_MESSAGE = "message";
@@ -34,25 +33,6 @@ public class ProgressDialogFragment extends DialogFragment {
     private int mMax;
     private int mProgress;
     private String mMessage;
-
-    //region HackishSavedState
-    private static class HackishSavedState {
-        private static Bundle mBundle = new Bundle();
-
-        public static Bundle getBundle(String key) {
-            return mBundle.getBundle(key);
-        }
-
-        public static void putBundle(String key, Bundle bundle) {
-            mBundle.putBundle(key, bundle);
-        }
-    }
-
-    private String getInternalStateKey() {
-        return "internalState:" + getTag();
-    }
-    //endregion
-
 
     /**
      * Create a spinner progress dialog.
@@ -104,18 +84,10 @@ public class ProgressDialogFragment extends DialogFragment {
         mMessage = getArguments().getString(ARG_MESSAGE);
         mProgress = getArguments().getInt(ARG_PROGRESS);
 
-
-        // savedInstanceState not work!!!
-        /*
-        * if (savedInstanceState != null) {
-        *     Log.d(TAG, "restore savedInstanceState");
-        *     mMessage = savedInstanceState.getString(ARG_MESSAGE);
-        *     mProgress = savedInstanceState.getInt(ARG_PROGRESS);
-        * }
-        */
+        // savedInstanceState not work!!! savedInstanceState value is NULL
 
         // Restore instance from HackishSavedState
-        Bundle savedBundle = HackishSavedState.getBundle(getInternalStateKey());
+        Bundle savedBundle = getInternalState();
         if (savedBundle != null) {
             mMessage = savedBundle.getString(ARG_MESSAGE);
             mProgress = savedBundle.getInt(ARG_PROGRESS);
@@ -181,24 +153,18 @@ public class ProgressDialogFragment extends DialogFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        String key = getInternalStateKey();
 
         ProgressDialog dlg = (ProgressDialog) getDialog();
         if (dlg != null) {
             // Don't work -> savedInstanceState value is NULL in OnCreate()
-            /*
-            * internalState.putString(ARG_MESSAGE, mMessage);
-            * internalState.putInt(ARG_PROGRESS, dlg.getProgress());
-            * Log.d(TAG, "->"  + internalState.toString());
-            */
 
             // Save in HackishSavedState
             Bundle internalState = new Bundle();
             internalState.putString(ARG_MESSAGE, mMessage);
             internalState.putInt(ARG_PROGRESS, dlg.getProgress());
-            HackishSavedState.putBundle(key, internalState);
+            saveInternalState(internalState);
         } else {
-            HackishSavedState.putBundle(getInternalStateKey(), null);
+            resetInternalState();
         }
     }
 
