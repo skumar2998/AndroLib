@@ -17,6 +17,9 @@
 
 package net.compactsys.androlib.util;
 
+import android.util.SparseBooleanArray;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ArrayUtils {
@@ -38,5 +41,49 @@ public class ArrayUtils {
             offset += array.length;
         }
         return result;
+    }
+
+
+    /**
+     * Thread safe clone for backward compatibility as {@link SparseBooleanArray#clone()}
+     * is supported first in 4.x APIs
+     *
+     * @param original object to clone
+     * @return a clone
+     */
+    public static SparseBooleanArray clone(final SparseBooleanArray original) {
+        if (original == null)
+            return null;
+
+        final SparseBooleanArray clone = new SparseBooleanArray();
+
+        synchronized (original) {
+            final int size = original.size();
+            for (int i = 0; i < size; i++) {
+                clone.put(i, original.get(i));
+            }
+        }
+
+        return clone;
+    }
+
+    public static int[] toArray(final SparseBooleanArray original) {
+        if (original == null)
+            return null;
+
+        final int orgSize = original.size();
+        if (orgSize == 0)
+            return null;
+
+        int[] bigArray = new int[orgSize];
+        int bigArrayIndex = 0;
+        synchronized (original) {
+            for (int i = 0; i < orgSize; i++) {
+                if (original.valueAt(i)) {
+                    bigArray[bigArrayIndex++] = original.keyAt(i);
+                }
+            }
+        }
+        return Arrays.copyOf(bigArray, bigArrayIndex);
     }
 }
