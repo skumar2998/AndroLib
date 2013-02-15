@@ -21,10 +21,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import net.compactsys.androlib.util.ArrayUtils;
+import net.compactsys.androlib.util.UIUtils;
 
 public class MultiChoiceDialogFragment extends InternalDialogFragment {
 
@@ -32,12 +34,15 @@ public class MultiChoiceDialogFragment extends InternalDialogFragment {
     public final static String ARG_CANCELABE = "cancelable";
 
     private final static String EXTRA_SELECTED_ITEMS = "selectedItems";
+    private final static int PADDING = 5;
 
     private ListAdapter mAdapter;
-    public CharSequence mPositiveButtonText;
-    public DialogInterface.OnClickListener mPositiveButtonListener;
-    public CharSequence mNegativeButtonText;
-    public DialogInterface.OnClickListener mNegativeButtonListener;
+
+    private SparseBooleanArray mCheckedArray;
+    private CharSequence mPositiveButtonText;
+    private DialogInterface.OnClickListener mPositiveButtonListener;
+    private CharSequence mNegativeButtonText;
+    private DialogInterface.OnClickListener mNegativeButtonListener;
 
     public static MultiChoiceDialogFragment newInstance(String title, boolean cancelable) {
 
@@ -49,6 +54,10 @@ public class MultiChoiceDialogFragment extends InternalDialogFragment {
         ldf.setArguments(args);
         ldf.setCancelable(cancelable);
         return ldf;
+    }
+
+    public MultiChoiceDialogFragment() {
+        mCheckedArray = new SparseBooleanArray(10);
     }
 
     @Override
@@ -67,6 +76,9 @@ public class MultiChoiceDialogFragment extends InternalDialogFragment {
         ListView mListView = new ListView(getActivity());
         mListView.setId(R.id.list);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        int margin = UIUtils.Dp2Px(PADDING, getActivity());
+        mListView.setPadding(margin, margin, margin, margin);
 
         //Create dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
@@ -98,10 +110,13 @@ public class MultiChoiceDialogFragment extends InternalDialogFragment {
         Bundle internalState = getInternalState();
         if (internalState != null) {
             selectedItems = internalState.getIntArray(EXTRA_SELECTED_ITEMS);
-            if (selectedItems != null) {
-                for (int position : selectedItems) {
-                    mListView.setItemChecked(position, true);
-                }
+        } else {
+            selectedItems = ArrayUtils.toArray(mCheckedArray);
+        }
+
+        if (selectedItems != null) {
+            for (int position : selectedItems) {
+                mListView.setItemChecked(position, true);
             }
         }
 
@@ -132,6 +147,14 @@ public class MultiChoiceDialogFragment extends InternalDialogFragment {
     public void setNegativeeButton(CharSequence text, final DialogInterface.OnClickListener listener) {
         mNegativeButtonText = text;
         mNegativeButtonListener = listener;
+    }
+
+    public void setItemChecked(int position, boolean value) {
+        ListView lv = getListView();
+        if (lv != null)
+            lv.setItemChecked(position, value);
+        else
+            mCheckedArray.put(position, value);
     }
 
     @Override
